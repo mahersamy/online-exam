@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+
+
+
+$primary-color: #4461f2;
+
+.custom-shadow {
+    box-shadow: 0 5px 100px 0 #0000001A;
+  }
+
+.input-custom-shadow {
+    box-shadow: 0 10px 20px 0 #4461f20d;
+  }
+
+.bg-primary{
+    background-color: $primary-color;
+}
+.text-primary{
+    color: $primary-color;
+}
+
+
+  @layer components {
+    .btn-primary {
+      border-radius: 1.25rem;
+      padding: 1rem;
+      background-color: $primary-color;
+      color: white;
+
+    }
+  }

@@ -1,0 +1,28 @@
+<div class="w-full  max-w-sm mt-[5rem]">
+    <h2 class="text-2xl font-bold mb-6">Sign in</h2>
+    <form class="flex flex-col" [formGroup]="loginForm" (ngSubmit)="login()">
+
+        @let emailValid=loginForm.get("email")?.errors&&loginForm.get("email")?.touched;
+        <input formControlName="email" type="email" placeholder="Email" class="w-full px-4 py-3 border border-gray-200 border-2 rounded-lg  focus:border-blue-500 bg-[#F9F9F9] focus-visible:outline-none"
+        [class.border-red-400]="emailValid"
+        [class.focus:border-red-400]="emailValid"
+        >
+        
+        
+        @let passwordValid=loginForm.get("password")?.errors&&loginForm.get("password")?.touched;
+        <input formControlName="password" type="password" placeholder="Password" class="w-full px-4 py-3 border border-gray-200 border-2 rounded-lg  focus:border-blue-500 bg-[#F9F9F9] focus-visible:outline-none mt-[2rem]"
+        [class.border-red-400]="passwordValid"
+        [class.focus:border-red-400]="passwordValid"
+        >
+
+
+        <a href="#" class="text-primary font-semibold mt-[1rem] ml-auto font-normal mt-[1rem]">Recover Password ?</a>
+
+        <button type="submit" class="w-full bg-primary text-white py-3 rounded-[1.25rem] hover:bg-[#1A1040] transition duration-300 shadow-[0_30px_18px_#2f1c1c1a] mt-[2.5rem]">Create Account</button>
+        
+    </form>
+
+    <div class="flex justify-center gap-4">
+       <app-social-buttons></app-social-buttons>
+    </div>
+</div>
