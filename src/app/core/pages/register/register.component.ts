@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialButtonsComponent } from "../components/social-buttons/social-buttons.component";
+import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
