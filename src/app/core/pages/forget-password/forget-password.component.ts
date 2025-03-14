@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthApiService } from 'auth-api';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forget-password',
@@ -9,6 +12,10 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
   styleUrl: './forget-password.component.scss'
 })
 export class ForgetPasswordComponent {
+  private readonly _authApiService=inject(AuthApiService);
+  private readonly _toastrService = inject(ToastrService);
+  private readonly _router = inject(Router);
+  
   forgetForm!: FormGroup;
   setPasswordForm!: FormGroup;
   verifyForm!: FormGroup;
@@ -17,6 +24,8 @@ export class ForgetPasswordComponent {
   sendCodeStep:boolean=true;
   verifyCodeStep:boolean=false;
   setPasswordStep:boolean=false;
+  loading:boolean=false;
+
   
 
 
@@ -31,41 +40,85 @@ export class ForgetPasswordComponent {
     },);
 
     this.setPasswordForm = new FormGroup({
-      password:new FormControl(null,[Validators.required,Validators.pattern(/^[\w]{6,}$/)]),
-      confirmPassword:new FormControl(null,[Validators.required,]),
+      email:new FormControl(null,[Validators.required,Validators.email]),
+      newPassword:new FormControl(null,[Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]),
     },{validators:[this.validateRePassword]});
 
     this.verifyForm = new FormGroup({
-      code: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      resetCode: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     },);
   }
 
 
-  sendCode() {
+  sendCode(nextStep:boolean=true) {
+    
     if (this.forgetForm.invalid) {
       this.forgetForm.markAllAsTouched();
+    }else{
+      this.loading=true;
+      this._authApiService.forgetPassword(this.forgetForm.value).subscribe({
+        next:(res)=>{
+          if(nextStep==true){
+            this.sendCodeStep=!this.sendCodeStep;
+            this.verifyCodeStep=true;
+          }
+          this.loading=false;
+        },
+        error:(error)=>{
+          this._toastrService.error(error.error.message);
+          this.loading=false;
+        }
+      })
+     
     }
-    this.sendCodeStep=!this.sendCodeStep;
-    this.verifyCodeStep=true;
     console.log(this.forgetForm)
+
   }
 
 
   verifyCode(){
+    
     if (this.verifyForm.invalid) {
       this.verifyForm.markAllAsTouched();
+    }else{
+      this.loading=true;
+      this._authApiService.verifyCode(this.verifyForm.value).subscribe({
+        next:(res)=>{
+          this.verifyCodeStep=!this.verifyCodeStep;
+          this.setPasswordStep=true;
+          this.loading=false;
+        },
+        error:(error)=>{
+          this._toastrService.error(error.error.message);
+          this.loading=false;
+        }
+      })
+      
+    
     }
-    this.verifyCodeStep=!this.verifyCodeStep;
-    this.setPasswordStep=true;
+ 
     console.log(this.verifyForm)
   }
 
 
   setPassword(){
+   
     if (this.setPasswordForm.invalid) {
       this.setPasswordForm.markAllAsTouched();
+    }else{
+      this.loading=true;
+      this._authApiService.resetPassowrd(this.setPasswordForm.value).subscribe({
+        next:(res)=>{
+          this.loading=false;
+          this._router.navigate(["/auth/login"])
+          
+        },
+        error:(error)=>{
+          this._toastrService.error(error.error.message);
+          this.loading=false;
+        }
+      })
     }
-    this.setPasswordStep=!this.setPasswordStep;
     console.log(this.setPasswordForm)
   }
 
@@ -78,8 +131,7 @@ export class ForgetPasswordComponent {
           }else{
             return {misMatch:true}
           }
-      
-      
+
         }
 
 
