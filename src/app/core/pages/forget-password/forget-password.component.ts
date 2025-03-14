@@ -61,6 +61,7 @@ export class ForgetPasswordComponent {
           if(nextStep==true){
             this.sendCodeStep=!this.sendCodeStep;
             this.verifyCodeStep=true;
+            
           }
           this.loading=false;
         },
@@ -87,6 +88,8 @@ export class ForgetPasswordComponent {
           this.verifyCodeStep=!this.verifyCodeStep;
           this.setPasswordStep=true;
           this.loading=false;
+          
+
         },
         error:(error)=>{
           this._toastrService.error(error.error.message);
@@ -110,7 +113,9 @@ export class ForgetPasswordComponent {
       this._authApiService.resetPassowrd(this.setPasswordForm.value).subscribe({
         next:(res)=>{
           this.loading=false;
-          this._router.navigate(["/auth/login"])
+          
+          this._router.navigate(["/auth/login"]);
+
           
         },
         error:(error)=>{

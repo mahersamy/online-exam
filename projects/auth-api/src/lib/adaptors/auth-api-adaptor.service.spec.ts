@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthAPIAdaptorService } from './auth-apiadaptor.service';
+import { AuthAPIAdaptorService } from './auth-api-adaptor.service';
 
 describe('AuthAPIAdaptorService', () => {
   let service: AuthAPIAdaptorService;
