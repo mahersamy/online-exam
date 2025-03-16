@@ -3,11 +3,11 @@ import { SocialButtonsComponent } from "../../layouts/auth-layout/components/soc
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forget-password',
-  imports: [SocialButtonsComponent,ReactiveFormsModule],
+  imports: [SocialButtonsComponent,ReactiveFormsModule,RouterLink],
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.scss'
 })
