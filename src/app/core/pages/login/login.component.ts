@@ -1,60 +1,63 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
-  imports: [SocialButtonsComponent, ReactiveFormsModule,RouterLink],
+  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  private readonly _authApiService=inject(AuthApiService);
+export class LoginComponent implements OnInit, OnDestroy {
+  private readonly _authApiService = inject(AuthApiService);
   private readonly _toastrService = inject(ToastrService);
-  
-  
+  private readonly destroy$ = new Subject<void>();
+
   loginForm!: FormGroup;
-  loading:boolean=false;
+  loading: boolean = false;
 
 
   ngOnInit(): void {
     this.formInit();
   }
 
-  // password "XyZ@9876"
+  ngOnDestroy(): void {
+    this.destroy$.next(); 
+    this.destroy$.complete();
+  }
+
   formInit() {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
+      ]),
     });
-
   }
-
 
   login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-    }else{
-      this.loading=true;
-      this._authApiService.login(this.loginForm.value).subscribe(
-        {
-          next:(res)=>{
-            this.loading=false;
-
+    } else {
+      this.loading = true;
+      this._authApiService.login(this.loginForm.value)
+        .pipe(takeUntil(this.destroy$)) 
+        .subscribe({
+          next: (res) => {
+            this.loading = false;
           },
-          error:(error)=>{
+          error: (error) => {
             this._toastrService.error(error.error.message);
-            this.loading=false;
-
-          },
-        }
-      )
-
+            this.loading = false;
+          }
+        });
     }
-    console.log(this.loginForm)
+    console.log(this.loginForm);
   }
-
 }

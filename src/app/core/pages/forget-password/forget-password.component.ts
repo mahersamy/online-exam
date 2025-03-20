@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-forget-password',
@@ -11,10 +12,13 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.scss'
 })
-export class ForgetPasswordComponent {
+export class ForgetPasswordComponent implements OnInit, OnDestroy{
   private readonly _authApiService=inject(AuthApiService);
   private readonly _toastrService = inject(ToastrService);
   private readonly _router = inject(Router);
+  private readonly destroy$ = new Subject<void>();
+  
+
   
   forgetForm!: FormGroup;
   setPasswordForm!: FormGroup;
@@ -32,6 +36,13 @@ export class ForgetPasswordComponent {
 
   ngOnInit(): void {
     this.formInit();
+  }
+
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+   
   }
 
   formInit() {
@@ -56,7 +67,7 @@ export class ForgetPasswordComponent {
       this.forgetForm.markAllAsTouched();
     }else{
       this.loading=true;
-      this._authApiService.forgetPassword(this.forgetForm.value).subscribe({
+      this._authApiService.forgetPassword(this.forgetForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
           if(nextStep==true){
             this.sendCodeStep=!this.sendCodeStep;
@@ -83,7 +94,7 @@ export class ForgetPasswordComponent {
       this.verifyForm.markAllAsTouched();
     }else{
       this.loading=true;
-      this._authApiService.verifyCode(this.verifyForm.value).subscribe({
+      this._authApiService.verifyCode(this.verifyForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
           this.verifyCodeStep=!this.verifyCodeStep;
           this.setPasswordStep=true;
@@ -110,7 +121,7 @@ export class ForgetPasswordComponent {
       this.setPasswordForm.markAllAsTouched();
     }else{
       this.loading=true;
-      this._authApiService.resetPassowrd(this.setPasswordForm.value).subscribe({
+      this._authApiService.resetPassowrd(this.setPasswordForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
           this.loading=false;
           
@@ -143,3 +154,5 @@ export class ForgetPasswordComponent {
 
      
 }
+
+
