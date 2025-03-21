@@ -2,14 +2,16 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
-
-
-
-import { routes } from './app.routes';
+import { provideStore } from '@ngrx/store';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { environment } from './core/environment/environment';
+
+
 import { API_BASE_URL } from 'auth-api';
+
+import { routes } from './app.routes';
+import { environment } from './core/environment/environment';
+import { tokenReducer } from './core/store/auth.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,11 +21,17 @@ export const appConfig: ApplicationConfig = {
       provideHttpClient(withFetch()),
       provideAnimations(),
       provideToastr(),
+      provideStore(
+        {
+          token:tokenReducer,
+        }
+      ),
       {
         provide:API_BASE_URL,
         useValue:environment.baseUrl
   
-      }
+      },
+
   
       
     ]

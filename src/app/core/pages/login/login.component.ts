@@ -1,11 +1,16 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+
+import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
+import { Store } from '@ngrx/store';
+import { setToken } from '../../store/auth.actions';
+
 
 @Component({
   selector: 'app-login',
@@ -16,6 +21,7 @@ import { takeUntil } from 'rxjs/operators';
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _toastrService = inject(ToastrService);
+  private readonly _store=inject(Store<string>);
   private readonly destroy$ = new Subject<void>();
 
   loginForm!: FormGroup;
@@ -41,23 +47,31 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  login() {
+  submit(fn:()=>void){
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
     } else {
+      fn.call(this);
+    }
+  }
+
+  login():void{
       this.loading = true;
       this._authApiService.login(this.loginForm.value)
         .pipe(takeUntil(this.destroy$)) 
         .subscribe({
           next: (res) => {
             this.loading = false;
+            localStorage.setItem("token",res.token);
+            this._store.dispatch(setToken({value:res.token}))
           },
           error: (error) => {
             this._toastrService.error(error.error.message);
             this.loading = false;
           }
         });
-    }
-    console.log(this.loginForm);
   }
+
+  
+
 }

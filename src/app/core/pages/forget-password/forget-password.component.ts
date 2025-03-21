@@ -1,10 +1,12 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+
+import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
+
 
 @Component({
   selector: 'app-forget-password',
@@ -24,7 +26,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
   setPasswordForm!: FormGroup;
   verifyForm!: FormGroup;
 
-
+  
   sendCodeStep:boolean=true;
   verifyCodeStep:boolean=false;
   setPasswordStep:boolean=false;
@@ -61,11 +63,18 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
   }
 
 
+  // Generic submit
+  submit(form:FormGroup,fn:()=>void){
+    if (form.invalid) {
+      form.markAllAsTouched();
+    } else {
+      fn.call(this);
+    }
+  }
+
   sendCode(nextStep:boolean=true) {
     
-    if (this.forgetForm.invalid) {
-      this.forgetForm.markAllAsTouched();
-    }else{
+  
       this.loading=true;
       this._authApiService.forgetPassword(this.forgetForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
@@ -82,17 +91,13 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
         }
       })
      
-    }
-    console.log(this.forgetForm)
+    
 
   }
 
 
   verifyCode(){
     
-    if (this.verifyForm.invalid) {
-      this.verifyForm.markAllAsTouched();
-    }else{
       this.loading=true;
       this._authApiService.verifyCode(this.verifyForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
@@ -108,34 +113,24 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
         }
       })
       
-    
-    }
  
-    console.log(this.verifyForm)
   }
 
 
   setPassword(){
-   
-    if (this.setPasswordForm.invalid) {
-      this.setPasswordForm.markAllAsTouched();
-    }else{
       this.loading=true;
       this._authApiService.resetPassowrd(this.setPasswordForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
           this.loading=false;
-          
           this._router.navigate(["/auth/login"]);
 
-          
         },
         error:(error)=>{
           this._toastrService.error(error.error.message);
           this.loading=false;
         }
       })
-    }
-    console.log(this.setPasswordForm)
+    
   }
 
 

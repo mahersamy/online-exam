@@ -1,11 +1,14 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { API_BASE_URL, AuthApiService } from 'auth-api';
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+
+import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
+
 
 @Component({
   selector: 'app-register',
@@ -55,10 +58,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return password === rePassword ? null : { misMatch: true };
   }
 
-  register() {
+  submit(fn:()=>void){
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
     } else {
+      fn.call(this);
+    }
+  }
+  register() {
       this.loading = true;
       this._authApiService.register(this.registerForm.value)
         .pipe(takeUntil(this.destroy$))
@@ -72,6 +79,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.loading = false;
           }
         });
-    }
+    
   }
 }
