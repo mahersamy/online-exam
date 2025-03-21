@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { jwtDecode } from "jwt-decode";
+
 
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
@@ -63,7 +65,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           next: (res) => {
             this.loading = false;
             localStorage.setItem("token",res.token);
-            this._store.dispatch(setToken({value:res.token}))
+            this._store.dispatch(setToken({user:jwtDecode(res.token)}))
+            // this._store.select("token").subscribe({
+            //   next:(res)=>{
+            //     console.log(res);
+            //   }
+            // })
           },
           error: (error) => {
             this._toastrService.error(error.error.message);
