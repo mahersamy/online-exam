@@ -6,5 +6,6 @@ export class AuthEndPoint{
     static VERIFYCODE="/auth/verifyResetCode";
     static RESETPASSWORD="/auth/resetPassword";
     static CHANGEPASSWORD="/auth/changePassword";
+    
 
 }

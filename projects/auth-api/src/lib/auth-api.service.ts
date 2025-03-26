@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { AuthApi } from './base/AuthAPI';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { AuthAPIAdaptorService } from './adaptors/auth-api-adaptor.service';
 import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable, throwError } from 'rxjs';
+
+import { AuthAPIAdaptorService } from './adaptors/auth-api-adaptor.service';
+import { AuthApi } from './base/AuthAPI';
 import { AuthEndPoint } from './enums/AuthAPI.endPoints';
 import { LoginData } from './interfaces/loginData';
 import { LoginResponse } from './interfaces/loginResponse';
@@ -50,7 +51,7 @@ export class AuthApiService implements AuthApi{
   }
 
   forgetPassword(data: ForgetPasswordData): Observable<ForgetPasswordResponse> {
-    return this._httpClient.post(this._Api_BASE+AuthEndPoint.REGISTER,data).pipe(map((res)=>this._forgetApiAdaptorService.adapt(res)),catchError(
+    return this._httpClient.post(this._Api_BASE+AuthEndPoint.FORGETPASSWORD,data).pipe(map((res)=>this._forgetApiAdaptorService.adapt(res)),catchError(
       (error)=>{
         return throwError(() => error);
       }
@@ -68,7 +69,7 @@ export class AuthApiService implements AuthApi{
   }
 
   resetPassowrd(data: ResetPasswordData): Observable<ResetPasswordResponse> {
-    return this._httpClient.put(this._Api_BASE+AuthEndPoint.VERIFYCODE,data).pipe(map((res)=>this._resetPasswordApiAdaptorService.adapt(res))
+    return this._httpClient.put(this._Api_BASE+AuthEndPoint.RESETPASSWORD,data).pipe(map((res)=>this._resetPasswordApiAdaptorService.adapt(res))
     ,catchError(
       (error)=>{
         return throwError(() => error);

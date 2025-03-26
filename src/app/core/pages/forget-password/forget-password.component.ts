@@ -53,7 +53,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
     },);
 
     this.setPasswordForm = new FormGroup({
-      email:new FormControl(null,[Validators.required,Validators.email]),
+      email:new FormControl(null,[Validators.email]),
       newPassword:new FormControl(null,[Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]),
     },{validators:[this.validateRePassword]});
 
@@ -119,6 +119,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy{
 
   setPassword(){
       this.loading=true;
+      this.setPasswordForm.get("email")?.setValue(this.forgetForm.get("email")?.value)
       this._authApiService.resetPassowrd(this.setPasswordForm.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res)=>{
           this.loading=false;
