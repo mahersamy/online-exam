@@ -2,7 +2,7 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { jwtDecode } from "jwt-decode";
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _toastrService = inject(ToastrService);
   private readonly _store=inject(Store<string>);
+  private readonly _router=inject(Router);
+  
   private readonly destroy$ = new Subject<void>();
 
   loginForm!: FormGroup;
@@ -66,7 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
           next: (res) => {
             this.loading = false;
             localStorage.setItem("token",res.token);
-            this._store.dispatch(setToken({user:jwtDecode(res.token)}))
+            this._store.dispatch(setToken({user:jwtDecode(res.token)}));
+            this._router.navigate(["/home"]);
+
+            
           },
           error: (error) => {
             this._toastrService.error(error.error.message);

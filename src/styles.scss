@@ -21,13 +21,3 @@ $primary-color: #4461f2;
     color: $primary-color;
 }
 
-
-  @layer components {
-    .btn-primary {
-      border-radius: 1.25rem;
-      padding: 1rem;
-      background-color: $primary-color;
-      color: white;
-
-    }
-  }
