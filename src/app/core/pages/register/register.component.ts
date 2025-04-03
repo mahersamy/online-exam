@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formInit();
-    console.log(this._Api);
   }
 
   ngOnDestroy(): void {
