@@ -15,7 +15,6 @@ export class SubjectService implements SubjectsApi {
   private readonly _httpClient = inject(HttpClient);
   private readonly _Api_BASE = inject(API_BASE_URL);
   private readonly _subjectApiAdaptorService = inject(SubjectApiAdaptorService);
-  token = typeof window !== 'undefined' ? localStorage.getItem('token')! : '';
 
   getAllSubjects(isLimit: boolean = true): Observable<Array<SubjectResponse>> {
     let finalUrl: string = this._Api_BASE + EndPoints.SUBJECTS;
@@ -24,11 +23,7 @@ export class SubjectService implements SubjectsApi {
     }
 
     return this._httpClient
-      .get(finalUrl, {
-        headers: {
-          token: this.token,
-        },
-      })
+      .get(finalUrl)
       .pipe(
         map(
           (res: any) => this._subjectApiAdaptorService.adapt(res.subjects),

@@ -14,13 +14,10 @@ export class ExamService implements ExamAPI {
   private readonly _httpClient = inject(HttpClient);
   private readonly _Api_BASE = inject(API_BASE_URL);
   private readonly _examApiAdaptorService = inject(ExamApiAdaptorService);
-  token = typeof window !== 'undefined' ? localStorage.getItem('token')! : '';
 
   getAllExamsOnSubject(id: string): Observable<Array<ExamResponse>> {
     return this._httpClient
-      .get(this._Api_BASE + EndPoints.Exams + '?subject=' + id, {
-        headers: { token: this.token },
-      })
+      .get(this._Api_BASE + EndPoints.Exams + '?subject=' + id)
       .pipe(
         map((res: any) => this._examApiAdaptorService.adapt(res.exams)),
         catchError((error) => {

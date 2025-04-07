@@ -32,7 +32,6 @@ export class AuthApiService implements AuthApi{
   private readonly _resetPasswordApiAdaptorService=inject(ResetPasswordApiAdaptorService);
 
   login(data: LoginData): Observable<LoginResponse> {
-    console.log(this._Api_BASE);
     return this._httpClient.post(this._Api_BASE+AuthEndPoint.LOGIN,data).pipe(map((res)=>this._authAPIAdaptorService.adapt(res)),catchError(
       (error)=>{
         return throwError(() => error);
