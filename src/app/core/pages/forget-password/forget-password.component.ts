@@ -6,11 +6,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
+import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
 
 
 @Component({
   selector: 'app-forget-password',
-  imports: [SocialButtonsComponent,ReactiveFormsModule,RouterLink],
+  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink, AuthButtonComponent],
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.scss'
 })

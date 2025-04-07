@@ -1,0 +1,52 @@
+<app-custom-modal [visable]="isModalOpen()" (closed)="closeModal()">
+    <div body>
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-sm text-gray-600">Question {{curentQuizNumber}} of {{quizes.length}}</span>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm font-semibold text-green-600 border border-green-500 px-1 rounded">{{quizes[0].exam.duration}}</span>
+        </div>
+      </div>
+  
+      <div class="flex justify-center mb-4 gap-2">
+        @for (_ of [].constructor(20); track $index) {
+          <span
+            class="w-2 h-2 rounded-full"
+            [class.bg-blue-600]="$index === curentQuizNumber-1"
+            [class.bg-gray-300]="$index !== curentQuizNumber-1"
+          ></span>
+        }
+      </div>
+  
+      <div class="mb-6">
+        <p class="text-md font-medium text-gray-800">
+          {{ quizes[0].question }}
+        </p>
+      </div>
+  
+      <div class="flex flex-col gap-[1rem] mb-6">
+        @for (answer of quizes[0].answers; track $index) {
+          <label class="flex items-center bg-[#EDEFF3] px-4 py-3 rounded-[.625rem] cursor-pointer transition ">
+            <input
+              type="radio"
+              [id]="answer.key"
+              name="list-radio"
+              [value]="answer.key"
+              class="w-4 h-4 text-blue-600 bg-blue-600 border-blue-300 ring-blue-500"
+            />
+            <span class="ml-3 text-xl">{{ answer.answer }}</span>
+          </label>
+        }
+      </div>
+    </div>
+    <div actions class="flex justify-between items-end space-x-[3rem]">
+        <button class="text-primary border border-primary py-[1.125rem] px-[7.5rem] rounded-full">
+          Back
+        </button>
+        <button class="border border-primary text-primary py-[1.125rem] px-[7.5rem] rounded-full" disabled>
+          Next
+        </button>
+      </div>
+  </app-custom-modal>

@@ -1,33 +1,44 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExamService } from '../../../shared/services/exam/exam.service';
 import { ExamResponse } from '../../../shared/interfaces/exams/exam-response';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
+import { QuizModalComponent } from "./components/quiz-modal/quiz-modal.component";
 
 @Component({
   selector: 'app-exams',
-  imports: [],
+  imports: [CustomModalComponent, QuizModalComponent],
   templateUrl: './exams.component.html',
   styleUrl: './exams.component.scss'
 })
 export class ExamsComponent implements OnInit {
-  
+
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _examService=inject(ExamService);
   private readonly _toastrService = inject(ToastrService);
-  
   private readonly destroy$ = new Subject<void>();
-  
 
-  exams!:ExamResponse[]
-  
+  exams!:ExamResponse[]  
   id!:string;
+  isModalOpen = signal(false);
+  loading:boolean=false;
 
 
   ngOnInit(): void {
     this.getId();
     this.getAllExamsOnSubjectId();
+  }
+
+  
+  closeModal() {
+    this.isModalOpen.set(false);
+  }
+
+  openModal(){
+    this.isModalOpen.set(true);
+
   }
 
   getId() {
@@ -44,9 +55,11 @@ export class ExamsComponent implements OnInit {
   }
 
   getAllExamsOnSubjectId(){
+    this.loading=true;
     this._examService.getAllExamsOnSubject(this.id).subscribe({
       next:(res)=>this.exams=res,
       error:(error)=>this._toastrService.error(error.error.message),
+      complete:()=>this.loading=false
     })
   }
 

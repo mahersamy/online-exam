@@ -8,11 +8,12 @@ import { takeUntil } from 'rxjs/operators';
 
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
+import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
 
 
 @Component({
   selector: 'app-register',
-  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink],
+  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink, AuthButtonComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

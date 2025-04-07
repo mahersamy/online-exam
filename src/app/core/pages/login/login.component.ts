@@ -13,11 +13,12 @@ import { Store } from '@ngrx/store';
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { setToken } from '../../store/auth.actions';
+import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
 
 
 @Component({
   selector: 'app-login',
-  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink],
+  imports: [SocialButtonsComponent, ReactiveFormsModule, RouterLink, AuthButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
