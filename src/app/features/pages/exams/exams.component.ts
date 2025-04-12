@@ -5,11 +5,11 @@ import { ExamResponse } from '../../../shared/interfaces/exams/exam-response';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
-import { QuizModalComponent } from "./components/quiz-modal/quiz-modal.component";
+import { QuizModalComponent } from "../quizs/quiz-modal.component";
 
 @Component({
   selector: 'app-exams',
-  imports: [CustomModalComponent, QuizModalComponent],
+  imports: [QuizModalComponent, CustomModalComponent],
   templateUrl: './exams.component.html',
   styleUrl: './exams.component.scss'
 })
@@ -22,8 +22,10 @@ export class ExamsComponent implements OnInit {
 
   exams!:ExamResponse[]  
   id!:string;
+  examId!:string;
   isModalOpen = signal(false);
   loading:boolean=false;
+  showDialogExam=signal(false);
 
 
   ngOnInit(): void {
@@ -36,9 +38,16 @@ export class ExamsComponent implements OnInit {
     this.isModalOpen.set(false);
   }
 
-  openModal(){
+  openModal(examId:string){
+    this.examId=examId;
     this.isModalOpen.set(true);
 
+  }
+
+
+  startExam(){
+    this.showDialogExam.set(true);
+    this.closeModal()
   }
 
   getId() {
