@@ -1,0 +1,71 @@
+@let currentQuiz = quizes[curentQuizNumber - 1];
+<app-custom-modal [visable]="isModalOpen()">
+  <div body>
+
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-gray-600"
+        >Question {{ curentQuizNumber }} of {{ quizes.length }}</span
+      >
+
+
+      <!-- timer -->
+      <div class="flex items-center gap-2">
+        <svg
+          class="w-5 h-5 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span
+          class="text-sm font-semibold text-green-600 border border-green-500 px-1 rounded"
+        >
+        @if (isModalOpen()) {
+          <app-custom-timer 
+            [startTime]="quizes[curentQuizNumber - 1].exam.duration" 
+            (completed)="closeModal()">
+          </app-custom-timer>
+        }
+        </span>
+      </div>
+    </div>
+
+    <!-- stepper -->
+    <app-quiz-stepper [currentQuizNumber]="curentQuizNumber" [quizesLength]="quizes.length"></app-quiz-stepper>
+
+    <app-quiz-title [title]="currentQuiz.question"></app-quiz-title>
+
+
+    <div class="flex flex-col gap-[1rem] mb-6">
+      @for (answer of currentQuiz.answers; track $index) {
+        <label  class="flex items-center px-4 py-3 rounded-[.625rem] cursor-pointer transition"
+        [class]="{
+          'bg-[#CCD7EB]':selectedAnswer===answer.key,
+          'bg-[#EDEFF3]':selectedAnswer!==answer.key
+        }"
+        >
+          <input
+          type="radio"
+          [id]="answer.key"
+          name="list-radio"
+          [value]="answer.key"
+          [checked]="selectedAnswer===answer.key"
+          (change)="selectedAnswer=answer.key"
+          class="w-4 h-4 text-blue-600 accent-blue-600"
+        />
+        <span class="ml-3 text-xl">{{ answer.answer }}</span>
+      </label>
+      }
+    </div>
+
+  </div>
+
+  <app-quiz-button actions (prev)="previous()" (next)="next(currentQuiz._id)"></app-quiz-button>
+
+</app-custom-modal>
