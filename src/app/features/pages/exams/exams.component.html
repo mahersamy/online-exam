@@ -15,8 +15,6 @@
   <app-quiz-modal [examId]="examId" [visable]="showDialogExam()"></app-quiz-modal>
 
 }
-
-
 @if(loading==false){
 <div class="exams_container mt-0 md:mt-[2.5rem]">
   @for (item of exams; track $index) {

@@ -59,7 +59,7 @@
           (change)="selectedAnswer=answer.key"
           class="w-4 h-4 text-blue-600 accent-blue-600"
         />
-        <span class="ml-3 text-xl">{{ answer.answer }}</span>
+        <span class="ml-3 text-xs md:text-xl">{{ answer.answer }}</span>
       </label>
       }
     </div>
@@ -69,3 +69,9 @@
   <app-quiz-button actions (prev)="previous()" (next)="next(currentQuiz._id)"></app-quiz-button>
 
 </app-custom-modal>
+
+
+
+@if(myAnswers.length===quizes.length){
+  <app-quiz-correct-awnser [visable]="true" class="z-[100]"  [quizes]="quizes" [myAwnsers]="myAnswers"></app-quiz-correct-awnser>
+}

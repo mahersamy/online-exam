@@ -1,17 +1,18 @@
 import { Component, effect, inject, input,OnInit,signal } from '@angular/core';
+
 import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
 import { QuizService } from '../../../shared/services/quiz/quiz.service';
 import { QuizResponse } from '../../../shared/interfaces/quiz/quiz-response';
 import { CustomTimerComponent } from "../../../shared/components/ui/custom-timer/custom-timer.component";
 import { QuizButtonComponent } from "./components/quiz-button/quiz-button.component";
 import { QuizStepperComponent } from "./components/quiz-stepper/quiz-stepper.component";
-import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
 import { Awnsers } from '../../../shared/interfaces/quiz/awnsers';
 import { QuizTitleComponent } from "./components/quiz-title/quiz-title.component";
+import { QuizCorrectAwnserComponent } from "./components/quiz-correct-awnser/quiz-correct-awnser.component";
 
 @Component({
   selector: 'app-quiz-modal',
-  imports: [CustomModalComponent, CustomTimerComponent, QuizButtonComponent, QuizStepperComponent, AuthButtonComponent, QuizTitleComponent],
+  imports: [CustomModalComponent, CustomTimerComponent, QuizButtonComponent, QuizStepperComponent, QuizTitleComponent, QuizCorrectAwnserComponent],
   templateUrl: './quiz-modal.component.html',
   styleUrl: './quiz-modal.component.scss'
 })
@@ -42,12 +43,14 @@ export class QuizModalComponent implements OnInit {
 
 
   next(id:string){
+    this.myAnswers[this.curentQuizNumber-1]={questionId:id,correct:this.selectedAnswer!};
    if (this.curentQuizNumber !== this.quizes.length && this.selectedAnswer){
-      this.myAnswers[this.curentQuizNumber-1]={questionId:id,correct:this.selectedAnswer!};
       this.curentQuizNumber++;
       console.log(this.myAnswers);
       this.loadCurrentQuestionAnswer()
       
+   }else{
+    this.closeModal();
    }
   }
 

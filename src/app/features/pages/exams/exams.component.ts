@@ -6,10 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
 import { QuizModalComponent } from "../quizs/quiz-modal.component";
+import { QuizCorrectAwnserComponent } from "../quizs/components/quiz-correct-awnser/quiz-correct-awnser.component";
 
 @Component({
   selector: 'app-exams',
-  imports: [QuizModalComponent, CustomModalComponent],
+  imports: [QuizModalComponent, CustomModalComponent, QuizCorrectAwnserComponent],
   templateUrl: './exams.component.html',
   styleUrl: './exams.component.scss'
 })
