@@ -17,12 +17,12 @@ export class QuizCorrectAwnserComponent implements OnInit {
   close=output<void>()
   @Input({ required: true }) quizes!: Array<QuizResponse>;
 
-finalArray:CorrectAnswer[]=[];
+  correctAnswerArray:CorrectAnswer[]=[];
 
 
 ngOnInit(): void {
   this.myAwnserIsCorrect();
-  console.log(this.finalArray);
+  console.log(this.correctAnswerArray);
 }
   
 
@@ -35,7 +35,7 @@ ngOnInit(): void {
       const questionWnserId = this.myAwnsers()[i].questionId;
       const question=this.quizes[i].question
       if(correct!==myAwnser && questionId===questionWnserId){
-        this.finalArray.push({questionId:questionId,correct:correct,myAnswer:myAwnser});
+        this.correctAnswerArray.push({questionId:questionId,correct:correct,myAnswer:myAwnser});
       
     }
 

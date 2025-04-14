@@ -45,7 +45,7 @@ export class ExamsComponent implements OnInit {
 
 
   startExam(){
-    this.showDialogExam.set(false); // Reset the signal before opening the modal
+    this.showDialogExam.set(false);
     setTimeout(() => {
       this.showDialogExam.set(true);
     }, 10); // Ensure the signal change is detected
