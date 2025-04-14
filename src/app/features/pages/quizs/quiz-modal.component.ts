@@ -43,15 +43,20 @@ export class QuizModalComponent implements OnInit {
 
 
   next(id:string){
+   if(this.selectedAnswer!==null){
     this.myAnswers[this.curentQuizNumber-1]={questionId:id,correct:this.selectedAnswer!};
+   }
    if (this.curentQuizNumber !== this.quizes.length && this.selectedAnswer){
       this.curentQuizNumber++;
       console.log(this.myAnswers);
       this.loadCurrentQuestionAnswer()
       
-   }else{
+   }
+   
+   if(this.curentQuizNumber-1 === this.quizes.length){
     this.closeModal();
    }
+   
   }
 
   previous(){
@@ -77,6 +82,10 @@ export class QuizModalComponent implements OnInit {
 
 
   closeModal() {
+    this.curentQuizNumber=1;
+    this.myAnswers = [];
+    this.quizes = [];
+    this.getAllQuizOnExam();
     this.isModalOpen.set(false);
   }
 
@@ -86,7 +95,8 @@ export class QuizModalComponent implements OnInit {
     this.selectedAnswer = previous?.correct ?? null;
   }
 
-  
+  openModal() {
+    this.isModalOpen.set(true);
+  }
 
-
- }
+}

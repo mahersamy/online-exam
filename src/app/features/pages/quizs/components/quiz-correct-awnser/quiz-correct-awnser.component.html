@@ -1,10 +1,10 @@
-<app-custom-modal [visable]="visable()" class="max-h-72 max-w-2xs">
-    <div body class="grid grid-cols-1 md:grid-cols-2 gap-[1rem] overflow-y-auto max-h-[25rem] ">
+<app-custom-modal [visable]="visable()" class="max-h-72 ">
+    <div body class="grid grid-cols-1 md:grid-cols-2 gap-[1rem] overflow-y-auto max-h-[25rem] max-w-[25rem] md:max-w-[50rem]">
         @for (quiz of quizes; track quiz._id) {
             @for (correctAnswer of finalArray; track $index) {
                 @if(correctAnswer.questionId == quiz._id) {
                     <div class="card px-[8px] py-[16px]  rounded-[.625rem] space-y-[1rem] border border-[#2A292940] ">
-                        <p class="text-xs">{{quiz.question}}</p>
+                        <p class="sm:text-xl md:text-2xl font-semibold">{{quiz.question}}</p>
                        <form>
                         <div class="flex flex-col gap-[1rem] mb-6">
                             @for (answer of quiz.answers; track $index) {
@@ -37,6 +37,7 @@
                 }
             }
         }
+        <button (click)="closeModal()" class="btn-close">Close</button>
     </div>
 </app-custom-modal>
 

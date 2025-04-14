@@ -1,4 +1,4 @@
-import { Component, Input, input, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit, output } from '@angular/core';
 import { CustomModalComponent } from "../../../../../shared/components/ui/custom-modal/custom-modal.component";
 import { Awnsers } from '../../../../../shared/interfaces/quiz/awnsers';
 import { QuizResponse } from '../../../../../shared/interfaces/quiz/quiz-response';
@@ -14,6 +14,7 @@ export class QuizCorrectAwnserComponent implements OnInit {
 
   myAwnsers=input.required<Array<Awnsers>>()
   visable=input.required<boolean>();
+  close=output<void>()
   @Input({ required: true }) quizes!: Array<QuizResponse>;
 
 finalArray:CorrectAnswer[]=[];
@@ -40,5 +41,9 @@ ngOnInit(): void {
 
   
   }
+  }
+
+  closeModal(){
+    this.close.emit()
   }
 }

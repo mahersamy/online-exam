@@ -1,4 +1,5 @@
-@let currentQuiz = quizes[curentQuizNumber - 1];
+@if(quizes){
+  @let currentQuiz = quizes[curentQuizNumber - 1];
 <app-custom-modal [visable]="isModalOpen()">
   <div body>
 
@@ -28,7 +29,7 @@
         >
         @if (isModalOpen()) {
           <app-custom-timer 
-            [startTime]="quizes[curentQuizNumber - 1].exam.duration" 
+            [startTime]="currentQuiz.exam.duration" 
             (completed)="closeModal()">
           </app-custom-timer>
         }
@@ -73,5 +74,7 @@
 
 
 @if(myAnswers.length===quizes.length){
-  <app-quiz-correct-awnser [visable]="true" class="z-[100]"  [quizes]="quizes" [myAwnsers]="myAnswers"></app-quiz-correct-awnser>
+  <app-quiz-correct-awnser [visable]="isModalOpen()" (close)="closeModal()" class="z-[100]"  [quizes]="quizes" [myAwnsers]="myAnswers"></app-quiz-correct-awnser>
+}
+
 }
