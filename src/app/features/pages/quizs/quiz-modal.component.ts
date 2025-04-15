@@ -1,4 +1,7 @@
 import { Component, effect,inject,input,OnInit,signal,} from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 
 import { CustomModalComponent } from '../../../shared/components/ui/custom-modal/custom-modal.component';
 import { QuizService } from '../../../shared/services/quiz/quiz.service';
@@ -8,7 +11,6 @@ import { QuizButtonComponent } from './components/quiz-button/quiz-button.compon
 import { QuizStepperComponent } from './components/quiz-stepper/quiz-stepper.component';
 import { Awnsers } from '../../../shared/interfaces/quiz/awnsers';
 import { QuizTitleComponent } from './components/quiz-title/quiz-title.component';
-import { ToastrService } from 'ngx-toastr';
 import { QuizScoreComponent } from "./components/quiz-score/quiz-score.component";
 
 @Component({
@@ -20,6 +22,8 @@ import { QuizScoreComponent } from "./components/quiz-score/quiz-score.component
 export class QuizModalComponent implements OnInit {
   private readonly _quizService = inject(QuizService);
   private readonly _toastrService = inject(ToastrService);
+  private readonly destroy$ = new Subject<void>();
+  
 
   visable = input.required<boolean>();
   examId = input.required<string>();
@@ -38,6 +42,8 @@ export class QuizModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllQuizOnExam();
+    if(this.quizes.length===0){
+    }
   }
 
   next(id: string) {
@@ -66,7 +72,7 @@ export class QuizModalComponent implements OnInit {
   }
 
   getAllQuizOnExam() {
-    this._quizService.getAllQuizOnExams(this.examId()).subscribe({
+    this._quizService.getAllQuizOnExams(this.examId()).pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         this.quizes = res;
         this.startTime.set(
