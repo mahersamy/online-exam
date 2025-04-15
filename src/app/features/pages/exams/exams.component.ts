@@ -1,17 +1,17 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExamService } from '../../../shared/services/exam/exam.service';
-import { ExamResponse } from '../../../shared/interfaces/exams/exam-response';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+
+import { ExamService } from '../../../shared/services/exam/exam.service';
+import { ExamResponse } from '../../../shared/interfaces/exams/exam-response';
 import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
 import { QuizModalComponent } from "../quizs/quiz-modal.component";
-import { QuizCorrectAwnserComponent } from "../quizs/components/quiz-correct-awnser/quiz-correct-awnser.component";
-import { QuizScoreComponent } from "../quizs/components/quiz-score/quiz-score.component";
+
 
 @Component({
   selector: 'app-exams',
-  imports: [QuizModalComponent, CustomModalComponent, QuizCorrectAwnserComponent, QuizScoreComponent],
+  imports: [QuizModalComponent, CustomModalComponent],
   templateUrl: './exams.component.html',
   styleUrl: './exams.component.scss'
 })
@@ -40,8 +40,13 @@ export class ExamsComponent implements OnInit {
   }
 
   openModal(examId:string){
-    this.examId=examId;
-    this.isModalOpen.set(true);
+    if(this.exams.length===0){
+      this._toastrService.error("this Exam Not Have a Quizs");
+    }else{
+      this.examId=examId;
+      this.isModalOpen.set(true);
+    }
+   
 
   }
 
@@ -68,7 +73,7 @@ export class ExamsComponent implements OnInit {
 
   getAllExamsOnSubjectId(){
     this.loading=true;
-    this._examService.getAllExamsOnSubject(this.id).subscribe({
+    this._examService.getAllExamsOnSubject(this.id).pipe(takeUntil(this.destroy$)).subscribe({
       next:(res)=>this.exams=res,
       error:(error)=>this._toastrService.error(error.error.message),
       complete:()=>this.loading=false

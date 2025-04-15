@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from 'auth-api';
 
 import { SubjectResponse } from '../../interfaces/subjects/subject-response';
-import { EndPoints } from '../../../core/enums/SubjectAPI.endPoints';
+import { EndPoints } from '../../../core/enums/onlineAPI.endPoints';
 import { SubjectApiAdaptorService } from '../../../core/adaptors/subject-api-adaptor.service';
 
 @Injectable({
