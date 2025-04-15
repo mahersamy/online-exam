@@ -6,15 +6,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CustomModalComponent } from "../../../shared/components/ui/custom-modal/custom-modal.component";
 import { QuizModalComponent } from "../quizs/quiz-modal.component";
+import { QuizCorrectAwnserComponent } from "../quizs/components/quiz-correct-awnser/quiz-correct-awnser.component";
+import { QuizScoreComponent } from "../quizs/components/quiz-score/quiz-score.component";
 
 @Component({
   selector: 'app-exams',
-  imports: [QuizModalComponent, CustomModalComponent],
+  imports: [QuizModalComponent, CustomModalComponent, QuizCorrectAwnserComponent, QuizScoreComponent],
   templateUrl: './exams.component.html',
   styleUrl: './exams.component.scss'
 })
 export class ExamsComponent implements OnInit {
-
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _examService=inject(ExamService);
   private readonly _toastrService = inject(ToastrService);
@@ -46,8 +47,10 @@ export class ExamsComponent implements OnInit {
 
 
   startExam(){
-    this.showDialogExam.set(true);
-    this.closeModal()
+    this.showDialogExam.set(false);
+
+    setInterval(()=>this.showDialogExam.set(true),10)
+    this.closeModal();
   }
 
   getId() {
