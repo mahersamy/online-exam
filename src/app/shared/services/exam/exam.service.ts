@@ -3,7 +3,7 @@ import { ExamAPI } from '../../../core/base/exam/exam-api';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from 'auth-api';
-import { EndPoints } from '../../../core/enums/SubjectAPI.endPoints';
+import { EndPoints } from '../../../core/enums/onlineAPI.endPoints';
 import { ExamApiAdaptorService } from '../../../core/adaptors/exam-api-adaptor.service';
 import { ExamResponse } from '../../interfaces/exams/exam-response';
 

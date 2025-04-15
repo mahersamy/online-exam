@@ -5,7 +5,7 @@ import { API_BASE_URL } from 'auth-api';
 import { QuizAPI } from '../../../core/base/quiz/quiz-api';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { QuizResponse } from '../../interfaces/quiz/quiz-response';
-import { EndPoints } from '../../../core/enums/SubjectAPI.endPoints';
+import { EndPoints } from '../../../core/enums/onlineAPI.endPoints';
 
 @Injectable({
   providedIn: 'root',

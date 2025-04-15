@@ -1,6 +1,5 @@
-import { Component, Input, input, OnInit, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CustomModalComponent } from "../../../../../shared/components/ui/custom-modal/custom-modal.component";
-import { Awnsers } from '../../../../../shared/interfaces/quiz/awnsers';
 import { QuizResponse } from '../../../../../shared/interfaces/quiz/quiz-response';
 import { CorrectAnswer } from '../../../../../shared/interfaces/quiz/correct-awnser';
 
@@ -12,7 +11,7 @@ import { CorrectAnswer } from '../../../../../shared/interfaces/quiz/correct-awn
 })
 export class QuizCorrectAwnserComponent{
 
-  correctAnswerArray=input.required<Array<CorrectAnswer>>();
+  wrongAnswerArray=input.required<Array<CorrectAnswer>>();
   quizs=input.required<Array<QuizResponse>>();
   visable=input.required<boolean>();
   close=output<void>()

@@ -21,7 +21,7 @@ export class QuizScoreComponent implements AfterViewInit {
   backBtn=output<void>();
   quizes=input.required<Array<QuizResponse>>();
   myAwnsers=input.required<Array<Awnsers>>();
-  correctAnswerArray:CorrectAnswer[]=[];
+  wrongAnswerArray:CorrectAnswer[]=[];
   visable=signal<boolean>(true);
   correctAnswerDialog=signal<boolean>(false);
   @ViewChild('scoreChart') scoreChart!: ElementRef;
@@ -51,13 +51,13 @@ export class QuizScoreComponent implements AfterViewInit {
       const questionWnserId = this.myAwnsers()[i].questionId;
       const question=this.quizes()[i].question
       if(correct!==myAwnser && questionId===questionWnserId){
-        this.correctAnswerArray.push({questionId:questionId,correct:correct,myAnswer:myAwnser,question:question});
+        this.wrongAnswerArray.push({questionId:questionId,correct:correct,myAnswer:myAwnser,question:question});
 
       }
     }
     console.log("Quizes:", this.quizes());
     console.log("My Answers:", this.myAwnsers());
-    console.log("CorrectAnswerArray:", this.correctAnswerArray);
+    console.log("wrongAnswerArray:", this.wrongAnswerArray);
   }
 
   ngAfterViewInit(): void {
@@ -70,7 +70,7 @@ export class QuizScoreComponent implements AfterViewInit {
       ],
         datasets: [
           {
-            data: [((this.quizes().length-this.correctAnswerArray.length)/this.quizes().length)*100, ((this.correctAnswerArray.length)/this.quizes().length)*100], 
+            data: [((this.quizes().length-this.wrongAnswerArray.length)/this.quizes().length)*100, ((this.wrongAnswerArray.length)/this.quizes().length)*100], 
             backgroundColor: ['#02369C', '#FF0000'],
             borderWidth: 10,
 
