@@ -3,12 +3,12 @@
       (click)="previous()"
       class="text-primary border border-primary py-[0.525rem] px-[3.25rem]  lg:py-[1.125rem] lg:px-[7.5rem] rounded-full"
     >
-      Back
+      {{leftButtonLabel()}}
     </button>
     <button
       (click)="forword()"
-      class="border border-primary text-primary py-[0.525rem] px-[3.25rem] lg:py-[1.125rem] lg:px-[7.5rem] rounded-full"
+      class="bg-primary border border-primary text-white py-[0.525rem] px-[3.25rem] lg:py-[1.125rem] lg:px-[7.5rem] rounded-full"
     >
-      Next
+      {{rightButtonLabel()}}
     </button>
 </div>

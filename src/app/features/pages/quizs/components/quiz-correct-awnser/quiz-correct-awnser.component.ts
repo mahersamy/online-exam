@@ -10,40 +10,15 @@ import { CorrectAnswer } from '../../../../../shared/interfaces/quiz/correct-awn
   templateUrl: './quiz-correct-awnser.component.html',
   styleUrl: './quiz-correct-awnser.component.scss'
 })
-export class QuizCorrectAwnserComponent implements OnInit {
+export class QuizCorrectAwnserComponent{
 
-  myAwnsers=input.required<Array<Awnsers>>()
+  correctAnswerArray=input.required<Array<CorrectAnswer>>();
+  quizs=input.required<Array<QuizResponse>>();
   visable=input.required<boolean>();
   close=output<void>()
-  @Input({ required: true }) quizes!: Array<QuizResponse>;
-
-  correctAnswerArray:CorrectAnswer[]=[];
-
-
-ngOnInit(): void {
-  this.myAwnserIsCorrect();
-  console.log(this.correctAnswerArray);
-}
   
 
-
-  myAwnserIsCorrect(){
-    for (let i = 0; i < this.quizes.length; i++) {
-      const correct = this.quizes[i].correct;
-      const myAwnser = this.myAwnsers()[i].correct;
-      const questionId = this.quizes[i]._id;
-      const questionWnserId = this.myAwnsers()[i].questionId;
-      const question=this.quizes[i].question
-      if(correct!==myAwnser && questionId===questionWnserId){
-        this.correctAnswerArray.push({questionId:questionId,correct:correct,myAnswer:myAwnser});
-      
-    }
-
-  
-  }
-  }
-
-  closeModal(){
+  closeModalHandler(){
     this.close.emit()
   }
 }

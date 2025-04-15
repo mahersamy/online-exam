@@ -8,12 +8,12 @@ import { QuizButtonComponent } from './components/quiz-button/quiz-button.compon
 import { QuizStepperComponent } from './components/quiz-stepper/quiz-stepper.component';
 import { Awnsers } from '../../../shared/interfaces/quiz/awnsers';
 import { QuizTitleComponent } from './components/quiz-title/quiz-title.component';
-import { QuizCorrectAwnserComponent } from './components/quiz-correct-awnser/quiz-correct-awnser.component';
 import { ToastrService } from 'ngx-toastr';
+import { QuizScoreComponent } from "./components/quiz-score/quiz-score.component";
 
 @Component({
   selector: 'app-quiz-modal',
-  imports: [CustomModalComponent,CustomTimerComponent,QuizButtonComponent,QuizStepperComponent,QuizTitleComponent,QuizCorrectAwnserComponent,],
+  imports: [CustomModalComponent, CustomTimerComponent, QuizButtonComponent, QuizStepperComponent, QuizTitleComponent, QuizScoreComponent],
   templateUrl: './quiz-modal.component.html',
   styleUrl: './quiz-modal.component.scss',
 })
@@ -53,7 +53,7 @@ export class QuizModalComponent implements OnInit {
       this.loadCurrentQuestionAnswer();
     }
 
-    if (this.curentQuizNumber - 1 === this.quizes.length) {
+    if (this.curentQuizNumber> this.quizes.length) {
       this.closeModal();
     }
   }
@@ -94,4 +94,6 @@ export class QuizModalComponent implements OnInit {
   openModal() {
     this.isModalOpen.set(true);
   }
+
+
 }
