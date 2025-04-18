@@ -38,7 +38,7 @@ export class CustomTimerComponent implements OnInit,OnDestroy{
   get formattedTime(): string {
     const min = Math.floor(this.timeLeftInSeconds / 60);
     const sec = this.timeLeftInSeconds % 60;
-    return `${this.pad(min)}:${this.pad(sec)}`;
+    return `${this.pad(min)}.${this.pad(sec)}`;
   }
 
   private pad(num: number): string {

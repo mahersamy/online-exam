@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthApiService } from 'auth-api';
 
 
 @Component({
   selector: 'app-main-aside',
-  imports: [],
+  imports: [RouterLink,RouterLinkActive],
   templateUrl: './main-aside.component.html',
   styleUrl: './main-aside.component.scss'
 })
