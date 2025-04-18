@@ -75,4 +75,9 @@ export class AuthApiService implements AuthApi{
       }
     ))
   }
+
+
+  logOut(): Observable<void> {
+    return this._httpClient.get<void>(this._Api_BASE + AuthEndPoint.LOGOUT);
+  }
 }
