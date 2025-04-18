@@ -6,7 +6,7 @@ import { SocialButtonsComponent } from "./components/social-buttons/social-butto
 
 @Component({
   selector: 'app-auth-layout',
-  imports: [RouterOutlet, AuthNavbarComponent, AuthAsideComponent, SocialButtonsComponent],
+  imports: [RouterOutlet, AuthNavbarComponent, AuthAsideComponent],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.scss'
 })
