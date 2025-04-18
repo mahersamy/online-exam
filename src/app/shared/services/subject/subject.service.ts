@@ -16,10 +16,10 @@ export class SubjectService implements SubjectsApi {
   private readonly _Api_BASE = inject(API_BASE_URL);
   private readonly _subjectApiAdaptorService = inject(SubjectApiAdaptorService);
 
-  getAllSubjects(isLimit: boolean = true): Observable<Array<SubjectResponse>> {
+  getAllSubjects(isLimit: boolean = true ,numOfLimit:number=6): Observable<Array<SubjectResponse>> {
     let finalUrl: string = this._Api_BASE + EndPoints.SUBJECTS;
     if (isLimit) {
-      finalUrl = this._Api_BASE + EndPoints.SUBJECTS + '?limit=6';
+      finalUrl = this._Api_BASE + EndPoints.SUBJECTS + '?limit='+numOfLimit;
     }
 
     return this._httpClient
