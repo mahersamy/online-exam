@@ -7,5 +7,6 @@ export class AuthEndPoint{
     static RESETPASSWORD="/auth/resetPassword";
     static CHANGEPASSWORD="/auth/changePassword";
     
+    
 
 }

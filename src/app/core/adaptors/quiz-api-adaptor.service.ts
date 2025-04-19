@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Adaptor } from '../interfaces/adaptor';
+import { QuizResponse } from '../../shared/interfaces/quiz/quiz-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizApiAdaptorService implements Adaptor {
-  adapt(data: any):any{
+  adapt(data: any):QuizResponse[]{
     if(Array.isArray(data)){
       return data.map((item)=>this.transform(item))
     }
-    return this.transform(data);
+    return [this.transform(data)];
   }
 
 

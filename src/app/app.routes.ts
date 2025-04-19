@@ -41,7 +41,11 @@ export const routes: Routes = [
       },
       {
         path:'exams/:id', loadComponent:()=>import('./features/pages/exams/exams.component').then(c=>c.ExamsComponent)
+      },
+      {
+        path:'quiz-history', loadComponent:()=>import('./features/pages/quiz-history/quiz-history.component').then(c=>c.QuizHistoryComponent)
       }
     ],
-  }
+  },
+  
 ];
