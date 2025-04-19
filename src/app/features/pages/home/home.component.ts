@@ -15,7 +15,8 @@ import { Subject, takeUntil } from 'rxjs';
 export class HomeComponent implements OnInit {
   private readonly _subjectService=inject(SubjectService);
   private readonly _toastrService = inject(ToastrService);
-    private readonly destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
+  
   
 
   
