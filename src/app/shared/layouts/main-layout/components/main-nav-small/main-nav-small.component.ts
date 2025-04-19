@@ -1,14 +1,21 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject} from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthApiService } from 'auth-api';
 
 @Component({
   selector: 'app-main-nav-small',
-  imports: [],
+  imports: [RouterLink,RouterLinkActive],
   templateUrl: './main-nav-small.component.html',
   styleUrl: './main-nav-small.component.scss',
 })
 export class MainNavSmallComponent {
+  private readonly _authApiService=inject(AuthApiService);
+  private readonly _router=inject(Router);
+  
+
   isSearchHidden: boolean = false;
   isLinksHiddden: boolean = false;
+
 
   searchHiddenToggle() {
     this.isSearchHidden = !this.isSearchHidden;
@@ -17,4 +24,20 @@ export class MainNavSmallComponent {
   linksHiddenToggle() {
     this.isLinksHiddden = !this.isLinksHiddden;
   }
+
+    logOut(){
+      this._authApiService.logOut().subscribe(
+        {
+          next:(res)=>{
+            localStorage.clear();
+            this._router.navigate(["/auth/login"]);
+          },
+          error:(error)=>{
+            console.log(error);
+          }
+        }
+      )
+     
+  
+    }
 }
