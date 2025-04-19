@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthApiService } from 'auth-api';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -12,8 +13,10 @@ import { AuthApiService } from 'auth-api';
 export class MainAsideComponent {
   private readonly _router=inject(Router);
   private readonly _authApiService=inject(AuthApiService);
+  private readonly destroy$ = new Subject<void>();
+  
   logOut(){
-    this._authApiService.logOut().subscribe(
+    this._authApiService.logOut().pipe(takeUntil(this.destroy$)).subscribe(
       {
         next:(res)=>{
           localStorage.clear();

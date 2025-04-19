@@ -1,6 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthApiService } from 'auth-api';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-main-nav-small',
@@ -11,6 +12,7 @@ import { AuthApiService } from 'auth-api';
 export class MainNavSmallComponent {
   private readonly _authApiService=inject(AuthApiService);
   private readonly _router=inject(Router);
+  private readonly destroy$ = new Subject<void>();
   
 
   isSearchHidden: boolean = false;
@@ -25,8 +27,8 @@ export class MainNavSmallComponent {
     this.isLinksHiddden = !this.isLinksHiddden;
   }
 
-    logOut(){
-      this._authApiService.logOut().subscribe(
+  logOut(){
+      this._authApiService.logOut().pipe(takeUntil(this.destroy$)).subscribe(
         {
           next:(res)=>{
             localStorage.clear();
@@ -39,5 +41,5 @@ export class MainNavSmallComponent {
       )
      
   
-    }
+  }
 }
