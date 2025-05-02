@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { API_BASE_URL, AuthApiService } from 'auth-api';
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -9,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
+import { AuthApiService } from 'auth-api-mtech';
 
 
 @Component({
@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _toastrService = inject(ToastrService);
   private readonly _router = inject(Router);
-  private readonly _Api = inject(API_BASE_URL);
 
   private readonly destroy$ = new Subject<void>(); 
 

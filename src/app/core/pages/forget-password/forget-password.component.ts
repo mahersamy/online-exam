@@ -1,12 +1,12 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
+import { AuthApiService } from 'auth-api-mtech';
 
 
 @Component({

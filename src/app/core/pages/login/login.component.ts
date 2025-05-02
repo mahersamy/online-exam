@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthApiService } from 'auth-api';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -14,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { SocialButtonsComponent } from "../../layouts/auth-layout/components/social-buttons/social-buttons.component";
 import { setToken } from '../../store/auth.actions';
 import { AuthButtonComponent } from "../../../shared/components/ui/auth-button/auth-button.component";
+import { AuthApiService } from 'auth-api-mtech';
 
 
 @Component({
