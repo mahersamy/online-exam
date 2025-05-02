@@ -116,7 +116,7 @@
         }
       }
     },
-    "auth-api": {
+    "auth-api-mtech": {
       "projectType": "library",
       "root": "projects/auth-api",
       "sourceRoot": "projects/auth-api/src",

@@ -1,5 +1,5 @@
 /*
- * Public API Surface of auth-api
+ * Public API Surface of auth-api-mtech
  */
 
 export * from './lib/auth-api.service';

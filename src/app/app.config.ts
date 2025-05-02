@@ -7,7 +7,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 
-import { API_BASE_URL } from 'auth-api';
+import { API_BASE_URL } from 'auth-api-mtech';
 
 import { routes } from './app.routes';
 import { environment } from './core/environment/environment';
