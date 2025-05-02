@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthApiService } from 'auth-api';
+import { AuthApiService } from 'auth-api-mtech';
 import { Subject, takeUntil } from 'rxjs';
 
 
