@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SubjectsApi } from '../../../core/base/subject/SubjectAPI';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { API_BASE_URL } from 'auth-api';
+import { API_BASE_URL } from '@mahersamy/auth-api';
 
 import { SubjectResponse } from '../../interfaces/subjects/subject-response';
 import { EndPoints } from '../../../core/enums/onlineAPI.endPoints';

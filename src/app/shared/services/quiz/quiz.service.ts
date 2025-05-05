@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { QuizApiAdaptorService } from '../../../core/adaptors/quiz-api-adaptor.service';
 import { HttpClient } from '@angular/common/http';
-import { API_BASE_URL } from 'auth-api';
+import { API_BASE_URL } from '@mahersamy/auth-api';
 import { QuizAPI } from '../../../core/base/quiz/quiz-api';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { QuizResponse } from '../../interfaces/quiz/quiz-response';
