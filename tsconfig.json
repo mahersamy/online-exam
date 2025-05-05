@@ -4,7 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "auth-api": [
+      "auth-api-mtech": [
         "./dist/auth-api"
       ]
     },

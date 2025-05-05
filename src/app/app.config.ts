@@ -7,12 +7,13 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 
-import { API_BASE_URL } from '@mahersamy/auth-api';
+import { API_BASE_URL } from 'auth-api';
 
 import { routes } from './app.routes';
 import { environment } from './core/environment/environment';
 import { tokenReducer } from './core/store/auth.reducer';
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
+import { API_BASE_URL } from 'auth-api-mtech';
 
 export const appConfig: ApplicationConfig = {
   providers: [
